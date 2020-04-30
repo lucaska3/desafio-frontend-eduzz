@@ -1,0 +1,11 @@
+{
+  "project": "Desafio Frontend Eduzz",
+  "repository": "",
+  "endpointDev": "https://desafio-api.devzz.ninja",
+  "endpointProd": "https://desafio-api.devzz.ninja",
+  "dockerImage": "infraeduzz/desafio-frontend-eduzz",
+  "dockerCredentials": "",
+  "sentryDsn": "",
+  "confirmed": true,
+  "slug": "desafio-frontend-eduzz"
+}

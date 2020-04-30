@@ -14,7 +14,7 @@ node {
     }
 
     stage ('Build container') {
-        app = docker.build("%DOCKER-IMAGE%", "-f ./prod/Dockerfile .")
+        app = docker.build("infraeduzz/desafio-frontend-eduzz", "-f ./prod/Dockerfile .")
     }
 
      stage('Publish to DockerHub') {

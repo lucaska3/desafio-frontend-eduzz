@@ -15,9 +15,7 @@ na raíz do projeto executar os comandos abaixo:
 
 yarn install # ou npm install
 
-node ./init.js # apenas caso não tenha iniciado o projeto ainda
-
-yarn dev # ou docker-compose up caso queira usar docker durante o dev
+yarn start # ou npm start
 ```
 
 Pronto, agora é só codar que ele reiniciará a aplicação com as alterações.
@@ -42,11 +40,3 @@ assim você poderá utilizar ela mas sem suporte a verificação de tipagem.
 ```ts
 declare module 'lib-nova';
 ```
-
-### Git 
-
-Antes de cada commit ele irá verificar se tem algum erro de Typescript ou do TSLint,
-isso evita um commit que quebre o ambiente de outra pessoa.
-
-Para mais informações veja a documentação do 
-[husky](https://github.com/typicode/husky)

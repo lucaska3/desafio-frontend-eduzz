@@ -17,9 +17,7 @@ Utilize o VSCode, já está configurado com sugestão de extensões.
 git clone [repo]
 yarn install # ou npm install
 
-node ./init.js
-
-yarn start # Não utilizar o docker
+yarn start # ou npm start
 ```
 
 ### Para mais informações veja a pasta ./docs

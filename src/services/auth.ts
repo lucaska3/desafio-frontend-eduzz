@@ -10,11 +10,9 @@ import tokenService, { TokenService } from './token';
 export class AuthService {
   private user$: Rx.Observable<IUserToken>;
   private openLogin$: Rx.BehaviorSubject<boolean>;
-  private openChangePassword$: Rx.BehaviorSubject<boolean>;
 
   constructor(private api: ApiService, private tokenService: TokenService) {
     this.openLogin$ = new Rx.BehaviorSubject(false);
-    this.openChangePassword$ = new Rx.BehaviorSubject(false);
 
     this.user$ = this.tokenService.getToken().pipe(
       map(token => {
@@ -22,9 +20,6 @@ export class AuthService {
 
         const user = this.tokenService.decode<IUserToken>(token);
         if (!user) return null;
-
-        user.fullName = `${user.firstName} ${user.lastName}`;
-        user.roles = user.roles || [];
         return user;
       }),
       catchError(() => Rx.of(null)),
@@ -59,48 +54,12 @@ export class AuthService {
     return this.tokenService.clearToken();
   }
 
-  public sendResetPassword(email: string): Rx.Observable<void> {
-    return this.api.post('/auth/send-reset', { email });
-  }
-
-  public resetPassword(token: string, password: string): Rx.Observable<void> {
-    return this.api.post('/auth/reset-password', { token, password });
-  }
-
-  public openChangePassword(): void {
-    this.openChangePassword$.next(true);
-  }
-
-  public closeChangePassword(): void {
-    this.openChangePassword$.next(false);
-  }
-
-  public shouldOpenChangePassword(): Rx.Observable<boolean> {
-    return this.openChangePassword$.asObservable();
-  }
-
-  public changePassword(currentPassword: string, newPassword: string): Rx.Observable<void> {
-    return this.api.post('/auth/change-password', {
-      currentPassword,
-      newPassword
-    });
-  }
-
   public getUser(): Rx.Observable<IUserToken> {
     return this.user$;
   }
 
-  public canAccess(...roles: string[]): Rx.Observable<boolean> {
-    return this.getUser().pipe(
-      map(user => {
-        if (!user) return false;
-
-        if (!roles || roles.length === 0) return true;
-        if (user.roles.includes('sysAdmin') || user.roles.includes('admin')) return true;
-
-        return roles.some(r => user.roles.includes(r));
-      })
-    );
+  public createAccount(name: string, email: string, password: string): Rx.Observable<void> {
+    return this.api.post('/account', { name, email, password });
   }
 
   public isAuthenticated(): Rx.Observable<boolean> {

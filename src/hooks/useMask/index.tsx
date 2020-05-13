@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import bitcoin from './bitcoin';
 import cnpj from './cnpj';
 import cpf from './cpf';
 import document from './document';
@@ -8,11 +9,11 @@ import phone from './phone';
 import zipcode from './zipcode';
 
 export interface IMaskFunction {
-  apply(value: string | number): string;
+  apply(value: string | number, minDigits?: number, maxDigits?: number): string;
   clean(value: string): string | number;
 }
 
-const maskHandlers = { zipcode, phone, document, cpf, cnpj, money };
+const maskHandlers = { zipcode, phone, document, cpf, cnpj, money, bitcoin };
 export type Masks = keyof typeof maskHandlers;
 
 export default function useMask(mask: Masks, value: any) {

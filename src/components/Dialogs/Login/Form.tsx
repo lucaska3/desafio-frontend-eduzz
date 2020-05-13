@@ -12,7 +12,7 @@ import authService from 'services/auth';
 import * as yup from 'yup';
 
 interface IProps {
-  onRecoveryAccess: (e: MouseEvent<HTMLElement>) => void;
+  onSingUp: (e: MouseEvent<HTMLElement>) => void;
 }
 
 const validationSchema = yup.object().shape({
@@ -49,8 +49,8 @@ const LoginDialogForm = memo((props: IProps) => {
         </CardContent>
 
         <CardActions className={classes.buttons}>
-          <Button disabled={formik.isSubmitting} size='small' onClick={props.onRecoveryAccess}>
-            Recuperar Acesso
+          <Button disabled={formik.isSubmitting} size='small' onClick={props.onSingUp}>
+            Cadastre-se
           </Button>
           <Button disabled={formik.isSubmitting} color='primary' type='submit'>
             Entrar

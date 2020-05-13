@@ -111,7 +111,7 @@ export class ApiService {
     if (!err.config || !err.response) return Rx.throwError(err);
 
     if (err.response.status !== 401 || !retry) {
-      return Rx.throwError(new ApiError(err.config, err.response, err));
+      Rx.throwError(new ApiError(err.config, err.response, err).data);
     }
 
     return authService.shouldOpenLogin().pipe(
@@ -127,7 +127,7 @@ export class ApiService {
       skip(1),
       switchMap(user => {
         if (!user) {
-          return Rx.throwError(new ApiError(err.config, err.response, err));
+          return Rx.throwError(new ApiError(err.config, err.response, err).data);
         }
 
         return this.request(err.config.method, err.config.url, err.config.data || err.config.params, false);

@@ -10,7 +10,7 @@ import { useObservable } from 'react-use-observable';
 import authService from 'services/auth';
 
 import LoginDialogForm from './Form';
-import LoginDialogRecoveryAccess from './RecoveryAcces';
+import LoginDialogSignUp from './SignUp';
 
 const useStyle = makeStyles({
   root: {
@@ -74,10 +74,10 @@ const LoginDialog = memo((props: {}) => {
 
           <SwipeableViews index={currentView}>
             <div className={classes.viewContainer}>
-              <LoginDialogForm onRecoveryAccess={handleChangeView(1)} />
+              <LoginDialogForm onSingUp={handleChangeView(1)} />
             </div>
             <div className={classes.viewContainer}>
-              <LoginDialogRecoveryAccess onCancel={handleChangeView(0)} onComplete={handleChangeView(0)} />
+              <LoginDialogSignUp onCancel={handleChangeView(0)} onComplete={handleChangeView(0)} />
             </div>
           </SwipeableViews>
         </div>

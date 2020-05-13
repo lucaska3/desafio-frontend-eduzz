@@ -3,7 +3,6 @@ import Menu, { MenuProps } from '@material-ui/core/Menu';
 import DotsHorizontalIcon from 'mdi-react/DotsHorizontalIcon';
 import React, { memo, useCallback, useMemo, useState } from 'react';
 
-import PermissionHide from '../PermissionHide';
 import DropdownMenuContext from './context';
 import OptionItem from './OptionItem';
 
@@ -21,7 +20,7 @@ const DropdownMenu = memo((props: Partial<MenuProps>) => {
     const content: React.ReactChild[] = [];
 
     React.Children.toArray(props.children).forEach((child: any) => {
-      if (child.type === OptionItem || child.type === PermissionHide) {
+      if (child.type === OptionItem) {
         options.push(child);
         return;
       }

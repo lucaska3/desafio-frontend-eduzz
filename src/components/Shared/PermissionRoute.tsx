@@ -1,6 +1,5 @@
 import { bindComponent } from 'helpers/rxjs-operators/bindComponent';
 import { logError } from 'helpers/rxjs-operators/logError';
-import { enRoles } from 'interfaces/models/user';
 import React, { Fragment } from 'react';
 import { Route, RouteProps } from 'react-router-dom';
 import { tap } from 'rxjs/operators';
@@ -8,9 +7,7 @@ import authService from 'services/auth';
 
 import PermissionHide from './PermissionHide';
 
-interface IProps extends RouteProps {
-  role?: enRoles;
-}
+interface IProps extends RouteProps {}
 
 export default class PermissionRoute extends Route<IProps> {
   constructor(props: IProps) {
@@ -45,9 +42,9 @@ export default class PermissionRoute extends Route<IProps> {
 
     return (
       <Fragment>
-        <PermissionHide role={this.props.role}>{super.render()}</PermissionHide>
+        <PermissionHide>{super.render()}</PermissionHide>
 
-        <PermissionHide inverse role={this.props.role}>
+        <PermissionHide inverse>
           <p>Não encontrado</p>
         </PermissionHide>
       </Fragment>

@@ -1,14 +1,16 @@
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Drawer from 'components/Layout/Drawer';
-import AccountMultipleIcon from 'mdi-react/AccountMultipleIcon';
-import StarIcon from 'mdi-react/StarIcon';
+import BankTransferInIcon from 'mdi-react/BankTransferInIcon';
+import CashPlusIcon from 'mdi-react/CashPlusIcon';
+import CurrencyBtcIcon from 'mdi-react/CurrencyBtcIcon';
 import ViewDashboardIcon from 'mdi-react/ViewDashboardIcon';
 import React, { memo, useCallback, useRef, useState } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-import DashboardIndexPage from './Dashboard';
-import SamplePage from './Sample';
-import UserIndexPage from './Users';
+import BuyBtc from './BuyBtc';
+import DashboardIndexPage from './Dashboard/';
+import Deposit from './Deposit';
+import SellBtc from './SellBtc';
 
 export const ScrollTopContext = React.createContext<Function>(() => {});
 
@@ -36,14 +38,26 @@ const AdminPage = memo((props: {}) => {
 
   const mainContent = useRef<HTMLDivElement>();
   const [menu] = useState([
-    { path: '/', display: 'Dashboard', icon: ViewDashboardIcon },
     {
-      path: '/usuarios',
-      display: 'Usuários',
-      // role: enRoles.admin,
-      icon: AccountMultipleIcon
+      path: '/',
+      display: 'Dashboard',
+      icon: ViewDashboardIcon
     },
-    { path: '/exemplos', display: 'Exemplos', icon: StarIcon }
+    {
+      path: '/deposito',
+      display: 'Depósito',
+      icon: BankTransferInIcon
+    },
+    {
+      path: '/compra',
+      display: 'Comprar BTC',
+      icon: CurrencyBtcIcon
+    },
+    {
+      path: '/venda',
+      display: 'Vender BTC',
+      icon: CashPlusIcon
+    }
   ]);
 
   const scrollTop = useCallback(() => setTimeout(() => mainContent.current.scrollTo(0, 0), 100), []);
@@ -55,8 +69,9 @@ const AdminPage = memo((props: {}) => {
         <Drawer menu={menu}>
           <main ref={mainContent} className={classes.content}>
             <Switch>
-              <Route path='/exemplos' component={SamplePage} />
-              <Route path='/usuarios' component={UserIndexPage} />
+              <Route path='/deposito' component={Deposit} />
+              <Route path='/compra' component={BuyBtc} />
+              <Route path='/venda' component={SellBtc} />
               <Route path='/' component={DashboardIndexPage} />
               <Route render={renderRedirect} />
             </Switch>

@@ -8,11 +8,10 @@ import { logError } from 'helpers/rxjs-operators/logError';
 import DarkIcon from 'mdi-react/Brightness4Icon';
 import LightIcon from 'mdi-react/Brightness5Icon';
 import ExitToAppIcon from 'mdi-react/ExitToAppIcon';
-import KeyVariantIcon from 'mdi-react/KeyVariantIcon';
-import React, { memo, useCallback, useContext } from 'react';
-import { useCallbackObservable, useObservable } from 'react-use-observable';
+import React, { memo, useContext } from 'react';
+import { useCallbackObservable } from 'react-use-observable';
 import { of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import authService from 'services/auth';
 
 const useStyles = makeStyles(theme => ({
@@ -31,18 +30,7 @@ const useStyles = makeStyles(theme => ({
 const UserMenu = memo((props: {}) => {
   const classes = useStyles(props);
   const themeContext = useContext(ThemeContext);
-
-  const [user] = useObservable(() => {
-    return authService.getUser().pipe(
-      map(user => ({
-        avatar: null,
-        avatarLetters: `${user.firstName?.substr(0, 1) ?? ''} ${user.lastName?.substr(0, 1) ?? ''}`.trim() || 'U'
-      })),
-      logError()
-    );
-  }, []);
-
-  const handleChangePassword = useCallback(() => authService.openChangePassword(), []);
+  const avatarLetters = 'A';
 
   const [handleLogout] = useCallbackObservable(() => {
     return of(true).pipe(
@@ -51,21 +39,16 @@ const UserMenu = memo((props: {}) => {
     );
   }, []);
 
-  if (!user) {
-    return null;
-  }
-
   return (
     <DropdownMenu anchorOrigin={{ vertical: 35, horizontal: 'right' }}>
       <IconButton color='inherit' className={classes.button}>
-        <Avatar className={classes.avatar}>{user.avatarLetters}</Avatar>
+        <Avatar className={classes.avatar}>{avatarLetters}</Avatar>
       </IconButton>
       <OptionItem
         text={themeContext.currentTheme === 'light' ? 'Tema Escuro' : 'Tema Claro'}
         icon={themeContext.currentTheme === 'light' ? DarkIcon : LightIcon}
         handler={themeContext.toogleTheme}
       />
-      <OptionItem text='Trocar senha' icon={KeyVariantIcon} handler={handleChangePassword} />
       <OptionItem text='Sair' icon={ExitToAppIcon} handler={handleLogout} />
     </DropdownMenu>
   );

@@ -21,13 +21,6 @@ export class LogService {
       });
       return;
     }
-
-    Sentry.setUser({
-      id: user.id.toString(),
-      email: user.email,
-      username: user.email,
-      extra: { ...user }
-    });
   }
 
   public breadcrumb(message: string, category: string = 'manual', data: any = {}): void {

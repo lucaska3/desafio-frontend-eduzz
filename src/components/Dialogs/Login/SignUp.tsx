@@ -20,7 +20,9 @@ interface IProps {
 }
 
 const validationSchema = yup.object().shape({
-  email: yup.string().required().email()
+  email: yup.string().required().email(),
+  name: yup.string().required(),
+  password: yup.string().required()
 });
 
 const useStyle = makeStyles({
@@ -29,16 +31,16 @@ const useStyle = makeStyles({
   }
 });
 
-const LoginDialogRecoveryAccess = memo((props: IProps) => {
+const LoginDialogSignUp = memo((props: IProps) => {
   const classes = useStyle(props);
 
   const formik = useFormikObservable({
-    initialValues: { email: '' },
+    initialValues: { email: '', password: '', name: '' },
     validationSchema,
     onSubmit(model) {
-      return authService.sendResetPassword(model.email).pipe(
+      return authService.createAccount(model.name, model.email, model.password).pipe(
         tap(() => {
-          Toast.show('Foi enviado um link para seu email para podermos recuperar seu acesso.');
+          Toast.show('Cadastro concluído com sucesso');
           props.onComplete();
           formik.resetForm();
         }),
@@ -51,9 +53,11 @@ const LoginDialogRecoveryAccess = memo((props: IProps) => {
     <form noValidate onSubmit={formik.handleSubmit}>
       <Card>
         <CardContent>
-          <Typography gutterBottom>Iremos lhe enviar um email para recuperar seu acesso</Typography>
+          <Typography gutterBottom>Insira as informações de cadastro:</Typography>
 
-          <TextField label='Email' type='email' name='email' formik={formik} margin='none' />
+          <TextField name='name' label='Nome' type='name' formik={formik} />
+          <TextField name='email' label='Email' type='email' formik={formik} />
+          <TextField name='password' label='Senha' type='password' formik={formik} margin='none' />
         </CardContent>
 
         <CardActions className={classes.buttons}>
@@ -61,7 +65,7 @@ const LoginDialogRecoveryAccess = memo((props: IProps) => {
             Voltar
           </Button>
           <Button disabled={formik.isSubmitting} color='primary' type='submit'>
-            Enviar
+            Cadastrar
           </Button>
         </CardActions>
 
@@ -71,4 +75,4 @@ const LoginDialogRecoveryAccess = memo((props: IProps) => {
   );
 });
 
-export default LoginDialogRecoveryAccess;
+export default LoginDialogSignUp;

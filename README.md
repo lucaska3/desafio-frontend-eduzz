@@ -1,5 +1,7 @@
-Projeto Base React
+Teste para Desenvolvedor Frontend na Eduzz
 ==================
+Projeto utilizando https://github.com/eduzz/react-admin-seed como seed.
+Teste por Lucas Koury Almeida
 
 Utilize o VSCode, já está configurado com sugestão de extensões.
 
@@ -11,7 +13,7 @@ Utilize o VSCode, já está configurado com sugestão de extensões.
 * React Router
 * Material UI (UI Framework)
 
-### Iniciando um novo projeto
+### Inicializando o projeto
 
 ```bash
 git clone [repo]
